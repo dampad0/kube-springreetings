@@ -1,0 +1,61 @@
+# This workflow builds a java project with gradle, containerizes it with Docker, and deploys it to AWS ECS
+
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - feat/*
+env:
+  AWS_REGION: us-east-1
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  ECR_REPOSITORY: 262139658630.dkr.ecr.us-east-1.amazonaws.com/springdemo
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Get project name
+        id: get_project_name
+        run: |
+          echo "project_name=$(./gradlew -q printName)" >> $GITHUB_OUTPUT
+
+      - name: Get project version
+        id: get_project_version
+        run: |
+          echo "project_version=$(./gradlew -q printVersion)" >> $GITHUB_OUTPUT
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg appName=${{ steps.get_project_name.outputs.project_name }} \
+            --build-arg version=${{ steps.get_project_version.outputs.project_version }} \
+            -t $ECR_REPOSITORY:${{ steps.get_project_version.outputs.project_version }} \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push $ECR_REPOSITORY:${{ steps.get_project_version.outputs.project_version }}
+
+
