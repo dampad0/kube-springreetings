@@ -9,10 +9,9 @@ on:
       - feat/*
 env:
   AWS_REGION: us-east-1
-  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  ECR_REPOSITORY: 262139658630.dkr.ecr.us-east-1.amazonaws.com/springdemo
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Create a secret in your repository with the name AWS_ACCESS_KEY_ID
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Create a secret in your repository with the name AWS_SECRET_ACCESS_KEY
+  ECR_REPOSITORY: # TODO: Add your ECR repository here
 
 
 jobs:
