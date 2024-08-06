@@ -3,6 +3,6 @@ sonar.projectName= springreeting-app-service
 sonar.projectVersion= 1.0
 sonar.sources= C:/Users/17038\kube-spring-redo/springreetings/bin/main/com/example/restservice, C:/Users/17038/kube-spring-redo/springreetings/bin/main 
 sonar.tests= C:/Users/17038/kube-spring-redo/springreetings/bin/test/com/example/restservice
-sonar.exclusions= **/*.java
+sonar.java.file.suffixes= .foo
 sonar.sourceEncoding= UTF-8
 sonar.dart.analyzer.options.override= true
