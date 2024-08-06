@@ -13,6 +13,14 @@ pipeline {
         snyk 'Snyk'
     }
     stages {
+        // connect to Github Repo
+        stage('Checkout Source') {
+             steps {
+                git branch: 'main',
+                credentialsId: 'GitHub-Credential',
+                url: 'https://github.com/dampad0/kube-springreetings.git'
+            }
+        }
         // SonarQube SAST Code Analysis
         stage("SonarQube SAST Analysis"){
             steps{
@@ -28,14 +36,6 @@ pipeline {
                 withCredentials([string(credentialsId: 'Snyk-API-Token', variable: 'SNYK_TOKEN')]) {
                     sh "${SNYK_HOME}/snyk-linux auth $SNYK_TOKEN"
                 }
-            }
-        }
-        // connect to Github Repo
-        stage('Checkout Source') {
-             steps {
-                git branch: 'main',
-                credentialsId: 'GitHub-Credential',
-                url: 'https://github.com/dampad0/kube-springreetings.git'
             }
         }
         // Scan Service Dockerfile With Open Policy Agent (OPA)
