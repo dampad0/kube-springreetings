@@ -30,6 +30,14 @@ pipeline {
                 }
             }
         }
+        // Providing Snyk Access
+        stage('Authenticate & Authorize Github') {
+            steps {
+                withCredentials([string(credentialsId: 'GitHub-Credentials', toolName: 'github')]) {
+                    sh "${SNYK_HOME}/snyk-linux auth $SNYK_TOKEN"
+                }
+            }
+        }
         // Scan Service Dockerfile With Open Policy Agent (OPA)
         stage('OPA Dockerfile Vulnerability Scan') {
             steps {
