@@ -30,12 +30,12 @@ pipeline {
                 }
             }
         }
-        // Providing Snyk Access
-        stage('Authenticate & Authorize Github') {
-            steps {
-                withCredentials([string(credentialsId: 'GitHub-Credentials', toolName: 'github')]) {
-                    sh "${SNYK_HOME}/snyk-linux auth $SNYK_TOKEN"
-                }
+        // connect to Github Repo
+        stage('Checkout Source') {
+             steps {
+                git branch: 'main',
+                credentialsId: 'GitHub-Credential',
+                url: 'https://github.com/dampad0/kube-springreetings.git'
             }
         }
         // Scan Service Dockerfile With Open Policy Agent (OPA)
