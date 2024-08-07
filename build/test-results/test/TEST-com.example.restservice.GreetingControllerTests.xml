@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.restservice.GreetingControllerTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-07-25T13:53:39" hostname="LAPTOP-V5L4A6GG" time="3.396">
+  <properties/>
+  <testcase name="noParamGreetingShouldReturnDefaultMessage()" classname="com.example.restservice.GreetingControllerTests" time="3.376"/>
+  <testcase name="paramGreetingShouldReturnTailoredMessage()" classname="com.example.restservice.GreetingControllerTests" time="0.017"/>
+  <system-out><![CDATA[09:53:32.315 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.restservice.GreetingControllerTests]: GreetingControllerTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:53:33.393 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.restservice.RestServiceApplication for test class com.example.restservice.GreetingControllerTests
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.0)
+
+2024-07-25T09:53:34.914-04:00  INFO 3448 --- [rest-service] [    Test worker] c.e.restservice.GreetingControllerTests  : Starting GreetingControllerTests using Java 17.0.12 with PID 3448 (started by 17038 in C:\Users\17038\cicd-final-project\springreetings)
+2024-07-25T09:53:34.917-04:00  INFO 3448 --- [rest-service] [    Test worker] c.e.restservice.GreetingControllerTests  : No active profile set, falling back to 1 default profile: "default"
+2024-07-25T09:53:39.414-04:00  INFO 3448 --- [rest-service] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-07-25T09:53:39.414-04:00  INFO 3448 --- [rest-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-07-25T09:53:39.419-04:00  INFO 3448 --- [rest-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2024-07-25T09:53:39.488-04:00  INFO 3448 --- [rest-service] [    Test worker] c.e.restservice.GreetingControllerTests  : Started GreetingControllerTests in 5.382 seconds (process running for 11.371)
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /greeting
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.restservice.GreetingController
+           Method = com.example.restservice.GreetingController#greeting(String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":1,"content":"Hello, World!"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /greeting
+       Parameters = {name=[Spring Community]}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.restservice.GreetingController
+           Method = com.example.restservice.GreetingController#greeting(String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":2,"content":"Hello, Spring Community!"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -23,7 +23,6 @@ pipeline {
         }
         // SonarQube SAST Code Analysis
         stage("SonarQube SAST Analysis"){
-
             steps{
                 withSonarQubeEnv('Sonar-Server') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springreeting-app-service \
