@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       app: group-app
-      env: prod-env
   template:
     metadata:
       labels:
