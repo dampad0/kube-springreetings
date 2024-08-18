@@ -5,17 +5,20 @@ metadata:
   name: group-app
   namespace: prod-env
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: group-app
+      env: prod-env
   template:
     metadata:
       labels:
         app: group-app
+        env: prod-env
     spec:
-      serviceAccountName: default
+      serviceAccountName: group-app-service-account
       containers:
-      - name: server
+      - name: group-app-prod-env
         image: dampado/springreetings:latest
         ports:
         - containerPort: 8080

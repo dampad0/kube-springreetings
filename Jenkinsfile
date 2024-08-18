@@ -12,24 +12,26 @@ pipeline {
     tools {
         snyk 'Snyk'
     }
+     
     stages {
-        // connect to Github Repo
-        stage('Checkout Source') {
-             steps {
+        // Connect to GitHub Repo
+        stage('Checkout Source'){
+            steps {
                 git branch: 'main',
                 credentialsId: 'GitHub-Credential',
                 url: 'https://github.com/dampad0/kube-springreetings.git'
             }
-        }
+        } 
         // SonarQube SAST Code Analysis
-        stage("SonarQube SAST Analysis"){
-            steps{
-                withSonarQubeEnv('Sonar-Server') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springreeting-app-service \
-                    -Dsonar.projectKey=springreeting-app-service '''
-                }
-            }
-        }
+        //stage("SonarQube SAST Analysis"){
+        //    steps{
+        //        withSonarQubeEnv('Sonar-Server') {
+        //            sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=springreeting-app-service \
+        //            -Dsonar.projectKey=springreeting-app-service '''
+        //        }
+        //        
+        //    }
+        //}
         // Providing Snyk Access
         stage('Authenticate & Authorize Snyk') {
             steps {
@@ -70,30 +72,17 @@ pipeline {
                 }
             }
         }
-        // Deploy to The Staging/Test Environment
         stage('Deploy Microservice To The Stage/Test Env'){
             steps{
                 script{
-                    withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'Kubernetes-Credential', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-                       sh 'kubectl apply -f deploy-envs/test-env/deployment.yaml'
-                       sh 'kubectl apply -f deploy-envs/test-env/nodeport-service.yaml'  //NodePort Service
-                       sh 'kubectl apply -f deploy-envs/test-namespace.yaml' 
+                    withKubeConfig([credentialsId: 'Kubernetes-Credential', clusterName: 'EKS_Cluster', namespace: 'test-env', serverUrl: 'https://4552F0D3B039B074E11004E92F7F0F0D.gr7.us-east-2.eks.amazonaws.com']) {
+                       sh 'kubectl apply -f deploy-envs/test-env/deployment.yaml -n test-env -sa group-app-service-account'
+                       sh 'kubectl apply -f deploy-envs/test-env/nodeport-service.yaml -n test-env -sa group-app-service-account'  //NodePort Service
+                       //sh 'kubectl apply -f deploy-envs/test-namespace.yaml' 
                    }
                 }
             }
         }
-        // // Deploy to the Production Environment
-        // stage('Deploy Microservice To The Stage/Test Env'){
-        //     steps{
-        //         script{
-        //             withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'Kubernetes-Credential', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-        //                sh 'kubectl apply -f deploy-envs/prod-env/deployment.yaml'
-        //                sh 'kubectl apply -f deploy-envs/prod-env/loadbalancer-service.yaml'  //Loadbalancer Service
-        //                sh 'kubectl apply -f deploy-envs/prod-namespace.yaml'
-        //            }
-        //         }
-        //     }
-        // }
         // // Perform DAST Test on Application
         // stage('ZAP Dynamic Testing | DAST') {
         //     steps {
@@ -116,7 +105,7 @@ pipeline {
         //             withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'Kubernetes-Credential', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
         //                sh 'kubectl apply -f deploy-envs/prod-env/deployment.yaml'
         //                sh 'kubectl apply -f deploy-envs/prod-env/loadbalancer-service.yaml'  //LoadBalancer Service
-        //                sh 'kubectl apply -f deploy-envs/prod-namespace.yaml'  
+        //                //sh 'kubectl apply -f deploy-envs/prod-namespace.yaml'  
         //             }
         //         }
         //     }
